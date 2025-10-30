@@ -12,24 +12,29 @@ import java.io.PrintWriter;
 
 @WebServlet ("/parametros")
 
-public class GetParametros  extends HttpServlet {
+public class GetParametros extends HttpServlet {
+
+    // Metodo que se ejecuta cuando se hace una petición GET al Servlet
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Configuramos el tipo de contenido de la respuesta
         response.setContentType("text/html;charset=UTF-8");
 
-        // Capturo el parámetro id
+        // Capturamos el parámetro "id" enviado en la URL
         String idParam = request.getParameter("id");
-        int id = 0; // valor por defecto
+        int id = 0; // valor por defecto en caso de no recibir parámetro
 
         if (idParam != null && !idParam.isEmpty()) {
             try {
+                // Intentamos convertir el parámetro a entero
                 id = Integer.parseInt(idParam);
             } catch (NumberFormatException e) {
-                // Si el parámetro no es numérico, puedes manejar el error
+                // Si el parámetro no es numérico, asignamos -1
                 id = -1;
             }
         }
 
+        // Preparamos la respuesta HTML
         PrintWriter out = response.getWriter();
         out.println("<html>");
         out.println("<head>");
@@ -38,7 +43,7 @@ public class GetParametros  extends HttpServlet {
         out.println("</head>");
         out.println("<body>");
         out.println("<h1>Parámetros del Servlet</h1>");
-        out.println("<p>ID: " + id + "</p>");
+        out.println("<p>ID: " + id + "</p>"); // Mostramos el ID recibido o el valor por defecto
         out.println("</body>");
         out.println("</html>");
     }
